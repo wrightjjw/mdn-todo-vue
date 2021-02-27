@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1>To-Do List</h1>
+    <ToDoForm @todo-added="addToDo"></ToDoForm>
     <ul>
       <li v-for='item in ToDoItems' :key='item.id'>
         <ToDoItem :label='item.label' :done='item.done' :id='item.id'/>
@@ -13,11 +14,13 @@
 import uniqueId from 'lodash.uniqueid';
 
 import ToDoItem from './components/TodoItem';
+import ToDoForm from './components/TodoForm';
 
 export default {
   name: 'App',
   components: {
     ToDoItem,
+    ToDoForm,
   },
   data() {
     return {
@@ -28,6 +31,11 @@ export default {
         { id: uniqueId('todo-'), label: 'Create a to-do list', done: false },
       ],
     };
+  },
+  methods: {
+    addToDo(toDoLabel) {
+      this.ToDoItems.push({ id: uniqueId('todo-'), label: toDoLabel, done: false });
+    }
   },
 }
 </script>
